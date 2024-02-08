@@ -1,0 +1,26 @@
+body {
+  overflow: hidden;
+}.sidebar{
+  width: 15vw;
+height: 90vh;
+overflow-y:auto;
+z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+.sub-list {
+
+  margin-left: -150px;
+margin-top:40px;
+  list-style: none; /* Madde işaretlerini kaldırır */
+  padding-left: 1em; /* Sol boşluk ekler */
+ /* Üst boşluk ekler */
+}
+.main-list {
+  list-style: none; /* Madde işaretlerini kaldırır */
+  padding-left: 0; /* Sol boşluğu kaldırır */
+  margin-top: 0; /* Üst boşluğu kaldırır */
+}
+
