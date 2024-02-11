@@ -1,32 +1,32 @@
 <div class="popup-form">
   <h2>Account Settings</h2>
-  <form>
+  <form (ngSubmit)="addCustomer()"  #userForm="ngForm" >
 
 
     <div class="form-group">
       <label for="name">Name</label>
-      <input class="bg-fade " placeholder="Type Here" type="text" id="name" name="name" required>
+      <input class="bg-fade" placeholder="Type Here" type="text" id="name" name="name" required [(ngModel)]="formData.name">
     </div>
     <div class="form-group">
       <label for="surname">Surname</label>
-      <input type="text" id="surname" name="surname" required>
+      <input type="text" id="surname" name="surname" required [(ngModel)]="formData.surname">
     </div>
     <div class="form-group">
       <label for="phone">Phone</label>
-      <input type="tel" id="phone" name="phone" required>
+      <input type="tel" id="phone" name="phone" required [(ngModel)]="formData.phone">
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" name="email" required [(ngModel)]="formData.email">
     </div>
     <div class="form-group">
       <label for="age">Age</label>
-      <input type="number" id="age" name="age" required>
+      <input type="number" id="age" name="age" required [(ngModel)]="formData.age">
     </div>
 
     <div class="form-group">
       <label for="joining-date">Joining Date</label>
-      <input type="date" id="joining-date" name="joining-date" required>
+      <input type="date" id="joining-date" name="joiningDate" required [(ngModel)]="formData.joiningDate">
     </div>
     <button type="submit">Save Changes</button>
     <button class="cancel" type="">Cancel</button>

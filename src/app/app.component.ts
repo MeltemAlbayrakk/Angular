@@ -6,7 +6,7 @@ import { ContentComponent } from './components/content/content.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import axios from 'axios';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,5 @@ import { FormsModule } from '@angular/forms';
 
 
 export class AppComponent {
-  title = 'frontend';
-
 
 }

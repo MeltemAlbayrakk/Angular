@@ -2,7 +2,7 @@ import { Component,OnInit  } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
 import { HttpClient } from '@angular/common/http';
-
+import { MockApiService } from '../../mock-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './content.component.css'
 })
 export class ContentComponent implements OnInit{
-  constructor(public dialog: MatDialog, private http: HttpClient) { // rowVisibility dizisini tablodaki her satır için varsayılan olarak false (görünür) olarak ayarlayın
+
+  mock: any[] = [];
+  constructor(public dialog: MatDialog, private http: HttpClient,private mockApiService: MockApiService) {
 
   }
 
@@ -27,19 +29,77 @@ export class ContentComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.fetchCustomers();
+    this.getMock();
   }
 
-  fetchCustomers(): void {
-    console.log('Customers:');
-   this.http.get<any[]>('/getCustomers').subscribe((response) => {
-      this.customers = response;
-      console.log('Customers:');
+  getMock() {
+    this.mockApiService.getRandomMock()
+    .then(response => {
+      console.log("bu response:", response);
+      this.mock = response.data;
+      console.log("çalıştı", this.mock);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  checkItem(email:string){
+    const index = this.customers.indexOf(email);
+    if (index === -1) {
+        // Kullanıcı dizide değilse, ekleyin
+        this.customers.push(email);
+        console.log("eklendi dizi:",this.customers)
+    } else {
+        // Kullanıcı dizide ise, çıkarın
+        this.customers.splice(index, 1);
+        console.log("cıkarıldı dizi:",this.customers)
+
+    }
+  }
+
+  toggleSelectAll(event: any) {
+    if (event.target.checked) {
+      this.customers=[]
+        // Tüm mock verilerini customers dizisine ekle
+        this.mock.forEach((item: any) => {
+            this.customers.push(item.email);
+            console.log(this.customers)
+        });
+    } else {
+        // customers dizisini boşalt
+        this.customers = [];
+        console.log(this.customers)
+
+    }
+}
+
+deleteCustomer(email:string){
+  //apiden silme
+  this.mockApiService.deleteCustomer(email)
+    .then(response => {
+      console.log("bu response:", response);
+
+
+    })
+    .catch(error => {
+      console.log(error);
     });
 
+
+
+
+//diziden silme
+
+  const index = this.mock.findIndex(item => item.email === email);
+  if (index !== -1) {
+      // Bulunan öğeyi listeden kaldır
+      this.mock.splice(index, 1);
+      console.log("bu mockk:",this.mock)
+  } else {
+      console.log("Email'e sahip öğe bulunamadı.");
   }
-
-
+}
 
   openPopup(): void {
     const dialogRef = this.dialog.open(PopupDialogComponent);
